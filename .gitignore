@@ -24,7 +24,6 @@ out/
 *.msi
 *.zip
 release/
-electron-builder.yml
 
 # TypeScript
 *.tsbuildinfo
