@@ -1,0 +1,36 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Vite build
+dist/
+out/
+
+# Electron builder
+*.app
+*.dmg
+*.exe
+*.msi
+*.zip
+release/
+electron-builder.yml
+
+# TypeScript
+*.tsbuildinfo
+
+# VS Code
+.vscode/
+.history/
+
+# OS file
