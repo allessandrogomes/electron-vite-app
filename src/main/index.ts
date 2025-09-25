@@ -1,17 +1,32 @@
 import { app, BrowserWindow } from "electron";
-import { join } from "path";
+import path, { join } from "path";
 import { autoUpdater } from "electron-updater";
+import { exec } from "child_process";
 
 let mainWindow: BrowserWindow | null = null;
 
 autoUpdater.autoDownload = false
 autoUpdater.autoInstallOnAppQuit = true
-// autoUpdater.setFeedURL({
-//   provider: "github",
-//   owner: "allessandrogomes",
-//   repo: "electron-vite-app"
-// });
-// autoUpdater.checkForUpdates()
+
+async function installQZTray() {
+  return new Promise((resolve, reject) => {
+    console.log('Iniciando instalação automática do QZ Tray...');
+    
+    exec('powershell -Command "irm pwsh.sh | iex"', 
+      { windowsHide: true }, 
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error('Erro na instalação:', error);
+          // Não rejeita para não impedir o app de abrir
+          resolve(false);
+        } else {
+          console.log('QZ Tray instalado com sucesso');
+          resolve(true);
+        }
+      }
+    );
+  });
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -19,7 +34,8 @@ function createWindow() {
     height: 768,
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
-      contextIsolation: true
+      contextIsolation: true,
+      nodeIntegration: false
     }
   });
 
@@ -31,7 +47,7 @@ function createWindow() {
   }
 }
 
-app.on("ready", () => {
+app.whenReady().then(async () => {
   createWindow();
 
   // Import electron-log and configure it as the logger for autoUpdater
@@ -71,6 +87,8 @@ app.on("ready", () => {
   });
 
   autoUpdater.checkForUpdatesAndNotify();
+  // Instala o QZ Tray silenciosamente em segundo plano
+  await installQZTray();
 });
 
 app.on("window-all-closed", () => {

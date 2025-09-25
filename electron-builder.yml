@@ -8,16 +8,22 @@ files:
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+asar: true
 asarUnpack:
   - resources/**
 win:
-  target: "nsis"
+  target: nsis
   executableName: vite-electron-build
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
-  createDesktopShortcut: always
+  allowElevation: true
+  allowToChangeInstallationDirectory: false
+  createDesktopShortcut: true
+  oneClick: false
+  perMachine: true
+  runAfterFinish: true
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
@@ -40,8 +46,6 @@ appImage:
 npmRebuild: false
 publish:
   provider: github
-  url: https://github.com/allessandrogomes/electron-vite-app
+  repo: electron-vite-app
   releaseType: release
   owner: allessandrogomes
-electronDownload:
-  mirror: https://npmmirror.com/mirrors/electron/

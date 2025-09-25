@@ -4,18 +4,6 @@
    "description": "vite-electron-app-desc",
    "version": "1.0.1",
    "author": "fulano de tal",
-   "repository": "https://github.com/allessandrogomes/electron-vite-app",
-   "build": {
-      "appId": "com.vite-electron-app.vite",
-      "productName": "vite-electron-app",
-      "publish": [
-         {
-            "provider": "github",
-            "owner": "allessandrogomes",
-            "repo": "electron-vite-app"
-         }
-      ]
-   },
    "scripts": {
       "start": "electron-vite dev && electron-vite preview",
       "dev": "electron-vite dev",
@@ -23,6 +11,7 @@
       "build:win": "npm run build && electron-builder --win --publish never"
    },
    "devDependencies": {
+      "@types/node-fetch": "^2.6.13",
       "@types/react-dom": "^19.1.9",
       "@vitejs/plugin-react": "^5.0.3",
       "electron": "^38.1.2",
@@ -34,6 +23,7 @@
    },
    "dependencies": {
       "electron-log": "^5.4.3",
-      "electron-updater": "^6.6.2"
+      "electron-updater": "^6.6.2",
+      "node-fetch": "^2.7.0"
    }
 }
